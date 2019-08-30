@@ -67,7 +67,7 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
     }'
 ```
 
-Its nothing fancy, using incrementing mode with the `Id` column and an SMT to specify the `CurrencyId` field as the key for the record.
+Its nothing fancy, I'm using incrementing mode with the `Id` column and an SMT to specify the `CurrencyId` field as the key for the record.
 
 With the application and Connector running we should see the ticker data in the Topic.
 
