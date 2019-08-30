@@ -147,11 +147,7 @@ ksql> select * from ticker_table;
 
 So if we think about the data inside the table it would look something like this...
 
-|     ROWTIME     |     ROWKEY     |     ID     |     LAST     |     LOWESTASK     |     HIGHESTBID     |     PERCENTCHANGE     |     BASEVOLUME     |     QUOTEVOLUME     |     FROZEN     |     HIGH24HR     |     LOW24HR     |     CURRENCYID     |
-| --------------- | -------------- | ---------- | ------------ | ----------------- | ------------------ | --------------------- | ------------------ | ------------------- | -------------- | ---------------- | --------------- | ------------------ |
-| 1567168110559   | 7              | 203        | 0.00000006   |        0.00000006 |         0.00000005 |            0.20000000 |         0.49651928 |    9084554.02673273 |              0 |       0.00000006 |      0.00000005 |                  7 |
-| 1567168110560   | 14             | 204        | 0.00000354   |        0.00000354 |         0.00000353 |           -0.02747252 |        28.92635877 |    8344153.09344625 |              0 |       0.00000369 |      0.00000330 |                 14 |
-| 1567168110560   | 20             | 205        | 0.00026168   |        0.00026682 |         0.00026330 |           -0.09116799 |         0.71899165 |       2698.59625966 |              0 |       0.00028793 |      0.00025000 |                 20 |
+![data](https://github.com/danieljameskay/danieljameskay.github.io/blob/master/images/Screenshot%202019-08-30%20at%2015.57.36.png)
 
 When the endpoint is scraped again in 5 seconds time, the table will have its state updated with the new data. After the state has been updated it represents the Ticker data value at that current moment in time. 
 
