@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Streaming state changes with Kafka Connect and KSQL
+title: Streaming stage changes with Kafka Connect and KSQL
 ---
 
 When I build streaming applications for a proof of concept or I want to try something new, I always try and use real-world data.
@@ -14,7 +14,6 @@ An endpoint that caught my eye was named returnTicker, which has the following d
 and returned the following data...
 
 ```json
-...
 { BTC_BCN:
    { id: 7,
      last: '0.00000024',
@@ -36,8 +35,7 @@ and returned the following data...
      quoteVolume: '185.43611063',
      isFrozen: '0',
      high24hr: '6499.09114231',
-     low24hr: '6370.00000000' },
-...
+     low24hr: '6370.00000000' }
 ```
 Looking at the payload that it returned blossomed an idea. I could store this data in a KSQL Table and as each currency pair has an `id` this could be used as the key. I could then use the KSQL Table to enrich a stream in the future or use the REST interface the KSQL Server exposes to receive state changes.
 
@@ -67,7 +65,7 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
     }'
 ```
 
-Its nothing fancy, I'm using incrementing mode with the `Id` column and an SMT to specify the `CurrencyId` field as the key for the record.
+Its nothing fancy, using incrementing mode with the `Id` column and an SMT to specify the `CurrencyId` field as the key for the record.
 
 With the application and Connector running we should see the ticker data in the Topic.
 
@@ -150,7 +148,7 @@ ksql> select * from ticker_table;
 So if we think about the data inside the table it would look something like this...
 
 | ROWTIME | ROWKEY | ID | LAST | LOWESTASK | HIGHESTBID | PERCENTCHANGE | BASEVOLUME | QUOTEVOLUME | FROZEN | HIGH24HR | LOW24HR | CURRENCYID
-| ------------- |:-:| :--:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :--------:| :--------:|
+| ------------- |:---:| :---:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :---------:| :--------:| :--------:|
 | 1567168110559 | 7 | 203 | 0.00000006 | 0.00000006 | 0.00000005 | 0.20000000 | 0.49651928 | 9084554.02673273 | 0 | 0.00000006 | 0.00000005 | 7
 | 1567168110560 | 14 | 204 | 0.00000354 | 0.00000354 | 0.00000353 | -0.02747252 | 28.92635877 | 8344153.09344625 | 0 | 0.00000369 | 0.00000330 | 14
 | 1567168110560 | 20 | 205 | 0.00026168 | 0.00026682 | 0.00026330 | -0.09116799 | 0.71899165 | 2698.59625966 | 0 | 0.00028793 | 0.00025000 | 20
