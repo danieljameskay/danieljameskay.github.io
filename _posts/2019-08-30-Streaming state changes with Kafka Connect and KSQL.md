@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Streaming stage changes with Kafka Connect and KSQL
+title: Streaming state changes with Kafka Connect and KSQL
 ---
 
 When I build streaming applications for a proof of concept or I want to try something new, I always try and use real-world data.
