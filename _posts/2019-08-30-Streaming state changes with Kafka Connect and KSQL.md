@@ -67,7 +67,7 @@ curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json
 
 Its nothing fancy, using incrementing mode with the `Id` column and an SMT to specify the `CurrencyId` field as the key for the record.
 
-With the application and Connector running we should see the ticker data in the Topic.
+With the application and Connector running we should see the Ticker data in the Topic.
 
 ```bash
 ksql> show topics;
@@ -135,7 +135,7 @@ Local runtime statistics
 icker)
 ```
 
-Then we can run an KSQL command to verify that the Table is being populated with data. The first column from the left is the `timestamp` and the second column in is the key which is the `CurrencyId`. 
+We can run an KSQL command to verify that the Table is being populated with data. The first column from the left is the `timestamp` and the second column in is the key which is the `CurrencyId`. 
 
 ```
 ksql> select * from ticker_table;
