@@ -97,7 +97,7 @@ Now we can create a KSQL Table for the data.
 ksql> create table ticker_table with (kafka_topic='mssql-poloniex-Ticker', value_forma
 t='avro', key='CurrencyId');
 ```
-We specify the Table name, the Topic name which contains the records, the output format and the key we want to use for the Table. If we describe the Table we'll be able to verify that the Tabled is keyed by the `CurrencyId`.
+We specify the Table name, the Topic name which contains the records, the output format and the key we want to use for the Table. If we describe the Table we'll be able to verify that the Table is keyed by the `CurrencyId`.
 
 ```
 ksql> describe extended ticker_table;
