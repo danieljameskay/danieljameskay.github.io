@@ -3,15 +3,13 @@ layout: post
 title: Streaming stage changes with Kafka Connect and KSQL
 ---
 
-When I build streaming applications for a proof of concept or I want to try something new, I always try and use real-world data.
+A near real-time data source I've recently being using is Poloniex. It's a Cryptocurrency Exchange that exposes many different endpoints for consumption by either HTTP or WS.
 
-One source I've recently being using is Poloniex. It's a cryptocurrency exchange that exposes many different endpoints for consumption by either HTTP or WS.
-
-An endpoint that caught my eye was named returnTicker, which has the following description...
+An endpoint that caught my eye was named `returnTicker`, which has the following description...
 
 > Retrieves summary information for each currency pair listed on the exchange
 
-and returned the following data...
+and returns the following data...
 
 ```json
 { BTC_BCN:
@@ -37,7 +35,9 @@ and returned the following data...
      high24hr: '6499.09114231',
      low24hr: '6370.00000000' }
 ```
-Looking at the payload that it returned blossomed an idea. I could store this data in a KSQL Table and as each currency pair has an `id` this could be used as the key. I could then use the KSQL Table to enrich a stream in the future or use the REST interface the KSQL Server exposes to receive state changes.
+Looking at the payload that it returned got me thinking. 
+
+I could store this data in a KSQL Table and as each currency pair has an `id`, this could be used as the key in the Table. I could then use the KSQL Table to enrich a stream in the future or use the REST interface the KSQL Server exposes to receive state changes.
 
 So I did just that. 
 
@@ -93,7 +93,6 @@ Format:AVRO
  "High24Hr": "0.00028793", "Low24Hr": "0.00025000", "CurrencyId": "20"}
 ```
 Now we can create a KSQL Table for the data.
-
 ```
 ksql> create table ticker_table with (kafka_topic='mssql-poloniex-Ticker', value_forma
 t='avro', key='CurrencyId');
@@ -174,6 +173,6 @@ We should then see the data returned.
 
 Pretty cool!
 
-Quick recap.....we have an application which is scraping an endpoint exposed by Poloniex every 5 seconds and persisting this data into a MS SQL Database. We are then using Kafka Connect to stream the new data into Kafka then utilise KSQL to build a KSQL Table which keeps a materialized view of the Ticker data. We can then use a query to stream changes of the state over HTTP or alternatively, use the state to enrich a KSQL Stream.
+Quick recap.....we have an application which is scraping an endpoint exposed by Poloniex every 5 seconds and persisting this data into a MS SQL Database. We are then using Kafka Connect to stream the new data into Kafka then utilising KSQL to build a KSQL Table which keeps a materialized view of the Ticker data. We can then use a query to stream changes of the state over HTTP or alternatively, use the state to enrich a KSQL Stream.
 
 DK
